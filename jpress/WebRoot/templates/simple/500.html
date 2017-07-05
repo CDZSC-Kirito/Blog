@@ -1,0 +1,13 @@
+<#include "_inc/layout.html"/> 
+<@layout>
+  <div class="error">
+    <p style="color:#fff;background:#000;font-size:3em;">
+      <i class="fa fa-frown-o"></i>系统错误（500）
+    </p>
+    <p>非常抱歉，系统发生错误，你可以尝试以下操作：</p>
+    <p>
+      <a href="javascript:history.go(-1);">返回上一页</a>
+      <a href="{CPATH!}/">返回首页</a>
+    </p>
+  </div>
+ </@layout>

@@ -1,0 +1,148 @@
+<#include "_inc/layout.html"/> 
+<#macro script_import>
+	<script src="${CPATH}/counter?cid=${content.id!}"></script>
+	<script src="${CTPATH}/js/highlight.js"></script>
+	<script src="${CTPATH}/js/jquery.min.js"></script>
+</#macro>
+<#macro script>
+	$(document).ready(function() {
+	//images
+	    $.museum($('.articleCon img'));
+	//code
+		$('code').each(function(i, block){
+	       hljs.highlightBlock(block);
+	    });
+	});
+	function reply(id){
+		$("#parent_id").val(id);
+	};
+	//baidu share
+	 window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":["sqq","qzone","weixin","youdao","evernotecn","tsina","copy"],"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"5","bdPos":"left","bdTop":"250"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)]; 
+</#macro>
+<#macro css_import>
+	<link rel="stylesheet" href="${CTPATH}/css/zenburn.css">
+</#macro>
+<#macro css>
+    .articleCon a{color:#23527c;}
+    .articleCon a:hover{color:#000;}
+	.zhuanzai p{color:#6c9;}
+	.zhuanzai a{color:#000;}
+	.zhuanzai a:hover{color:#6c9;}
+	.replycontent{color:#6c9;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; background: #FFFFCC;padding:5px;border-radius: 10px;}
+	.replycontent p{font-size:14px;}
+	.replycontent .replyc{display:block;text-indent:1em;font-szie:12px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; }
+	.articleDetail .pageNav nav{width:90%;}
+</#macro>
+<@layout>
+	<div class="articleDetail container">
+    <div class="row">
+  		<div class="col-md-12">
+  			<div class="articleContent">
+   				<!-- 标题 -->
+   				<div class="title">${content.title}</div>
+   				<!-- 访问量 ...-->
+   				<div class="secTitleBar">
+   					<ul>
+   						<li>分类：${content.getTaxonomyAsUrl('category')!'未分类'}</li>
+   						<li>发表：${content.created?string('yyyy-MM-dd')!}</li>
+   						<li>围观：${content.viewCount!'0'}</li>
+   						<li><a href="#comments">评论：${content.commentCount!'0'}</a></li>
+   					</ul>
+            	</div>
+            <!-- 内容 -->
+            <div class="articleCon post_content">${content.text!}
+            	
+            	<div class="zhuanzai">
+            		<p>转载请注明原文链接：<a href="${(content.url)!}" title="${WEB_TITLE!}">${WEB_TITLE!}</a></p>
+            	</div>
+            	
+   				<#if OPTION('simple_wechat_pay_enable')?? && OPTION('simple_wechat_pay_enable')=='true'>
+			        <div class="reward-content">
+			          <p><img src="${CPATH}${OPTION('simple_wechat_pay_image')!}"/> </p>
+			          <p>${OPTION('simple_wechat_pay_tips')!'打赏一个呗~~'}</p>
+			        </div>
+		        </#if>
+   				<!-- 标签 -->
+   				<!-- <div class="articleTagsBox">
+   					<ul><span>标签：</span> <a href="" rel="tag">simple</a></ul>
+   				</div> -->
+           </div>          
+           <!-- -->
+        
+ 
+	<#if content.isCommentEnable() >
+    <!-- input start -->
+      <div class="post_content">
+	      <nav class="navigation comment-navigation u-textAlignCenter"></nav>
+	      <p>发表评论：</p>
+	      <div id="respond" class="respond" role="form">
+		      <form  action="${CPATH}/comment/submit" method="post"  id="comment">
+		        <input type="hidden" name="cid" value="${(content.id)!}" >
+		        <input type="hidden" name="anchor" value="comment" >
+		        <input type="hidden" id="parent_id" name="parent_id" >
+		        <textarea class="form-control" rows="3" id="comment" onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('submit').click();return false};" placeholder="评论下..." tabindex="1" name="text"></textarea>
+			        <#if OPTION('comment_need_captcha') ?? && OPTION('comment_need_captcha')=='true'>
+			            <div class="commentform-info">
+			               <p style="float:left;width:20%"> <img src="${CPATH}/captcha" onclick="this.src='${CPATH}/captcha?d='+Math.random();" style="display: inline-block;" ></p>
+			               <p style="float:right"> <label for="captcha">
+			                    <input class="form-control"  type="text" id="captcha" tabindex="2" name="comment_captcha" placeholder="请填写验证码" required>
+			                </label></p>
+			            </div>
+			         </#if>
+			          <div class="btn-group commentBtn" role="group">
+			            <input name="submit" type="submit" id="submit" class="btn btn-sm btn-danger btn-block" tabindex="5" value="发表评论" />
+			          </div>
+	       
+		    </form>
+	       </div>
+		</#if>
+	    <!-- input end -->
+	 	<!-- -->
+	 	<p style="height:80px;"></p>
+	    <@jp.commentPage pageSize="10">
+	     <#if page ??>
+		<div id="comments" class="responsesWrapper">
+		    <h3 class="comments-title">共有 <span class="commentCount">${page.totalRow!}</span> 条评论</h3>
+		    <ol class="commentlist">
+		     <!--  -->
+		     <#list page.getList() as comment>
+		      <li class="comment" id="li-comment-524">
+	     		<div class="media">
+	     			<div class="media-left">
+	          		    <img alt='' src="${CPATH}${comment.avatar!TPATH+'/images/avatar.jpg'}" class='avatar avatar-48 photo' height='48' width='48' />
+	                </div>
+	     			<div class="media-body">
+	     			<p class="author_name">${comment.author!}</p>
+	     			<#if comment.qc_content ??>
+			            <div class="replycontent">
+			         		<p>引用来自于<span style="color:#f00;"> ${comment.qc_author!} </span>的内容：</p>
+			            	<span class="replyc">${comment.qc_content!}</span>         		 
+			            </div>
+		            </#if>
+	                <p>${comment.text!}</p>
+	     			</div>
+	     		</div>
+	     		<div class="comment-metadata">
+	     			<span class="comment-pub-time">${(comment.created?string("yyyy-MM-dd"))!}</span>
+	     			<span class="comment-btn-reply">
+	   					<i class="fa fa-reply"></i>
+	          			<a rel='nofollow' class='comment-reply-link' href="#comment" onclick="reply('${comment.id!}')">回复</a>
+	     			</span>
+	     		</div>
+			 </li>
+		  </#list>
+		 <!--  -->
+		  </ol>
+	   </div>
+		<!-- pagination -->
+		 <#include "_inc/pagination.html"/>
+		</#if>
+		</@jp.commentPage>
+	 </div>
+   	<!--  -->
+      </div>
+    </div>
+  </div>
+<!-- -->
+</div>
+</@layout>

@@ -1,0 +1,56 @@
+<#include "_inc/layout.html"/> 
+<@layout>
+  <!--文章列表-->
+  <@jp.contentPage pageSize="10" >
+		<#list page.getList() as content>
+	<div class="articleList container">
+		<div class="row">
+			<div class="col-md-12">
+				<!--sCategory details-->
+				<div class="article">
+					<div class="articleHeader">
+						<h1 class="articleTitle"><a href="${content.url}">${content.title}</a></h1>
+						<span class="cate-Div">
+							<i class="fa fa-map-marker"></i>${content.getTaxonomyAsUrl('category')!'未分类'}
+						</span>
+					</div>
+					<div class="articleBody clearfix">
+						<!--缩略图-->
+						<div class="articleThumb">
+							<a href="${content.url!}">
+								<#if content.thumbnail ??>
+								    <img src="${content.thumbnailByName('t1')!}"  alt="${content.title}" class="wp-post-image" width="400" height="200"  />
+								<#elseif ((content.imageCount > 0)) >
+								    <img src="${(content.firstImage)!}"  alt="${content.title}" class="wp-post-image" width="400" height="200"  />
+								<#else>
+								    <img src="${CTPATH}/images/thumbnail.jpg" alt="${content.title}" class="wp-post-image" width="400" height="200"  />
+								</#if>
+							</a>
+						</div>
+						<!--摘要-->
+						<div class="articleFeed">
+							<p>${content.summary}</p>
+						</div>
+					</div>
+					<div class="articleFooter clearfix">
+						<ul class="articleStatu">
+							<li><i class="fa fa-user"></i>${content.nickname!content.username!}</li>
+							<li><i class="fa fa-calendar"></i>${content.created?string("yyyy-MM-dd")!}</li>
+							<li><i class="fa fa-eye"></i>${content.view_count!'0'}</li>
+							<li>
+							  <a href=""><i class="fa fa-folder-o"></i>
+								${content.getTaxonomyAsUrl('category')!'未分类'}
+							  </a>
+							</li>
+						</ul>
+						<a href="${content.url}" class="btn btn-readmore btn-info btn-md">阅读更多</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</#list>
+	<#include "_inc/pagination.html"/>
+</@jp.contentPage>
+  <!--  -->
+</@layout>

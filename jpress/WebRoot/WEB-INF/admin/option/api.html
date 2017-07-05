@@ -1,0 +1,162 @@
+<#include "../_inc/_layout.html"/>
+<#macro script> function doSubmit(){ $("#form").ajaxSubmit({
+type : "post", dataType : "json", success : function(data) {
+if(data.errorCode == 0){
+location.href="${CPATH}/admin/api?p=option&c=api"; }else{
+alert(data.message); } }, error : function() { alert("淇℃伅鎻愪氦閿欒"); } });
+
+} function doDelete(id){
+$.get("${CPATH}/admin/api/delete?ucode=${ucode}&id="+id,
+function(result){ if(result.errorCode > 0){ alert(result.message);
+}else{ location.reload(); } }); } </#macro>
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>API搴旂敤璁剧疆</h1>
+</section>
+<!-- Main content -->
+<section class="content">
+	<p class="content-msg">閫氳繃API鐨勮缃紝鐏垫椿鐨勫紑鍚槸鍚﹀厑璁告煇浜涘簲鐢ㄨ闂綉绔欑殑API銆�</p>
+
+	<form action="${CPATH}/admin/api/save" method="POST" id="form">
+		<input type="hidden" name="ucode" value="${ucode}"> <input
+			type="hidden" name="content.module" value="apiApplication"> <input
+			type="hidden" name="content.id" value="${(content.id)!}">
+		<div class="row">
+			<div class="col-xs-12">
+				<h4 class="jp-set-title">甯歌閫夐」</h4>
+				<ul class="list-unstyled">
+
+					<li class="jp-set-pad">
+						<div class="col-sm-3 ">
+							<div class="jp-set-info ">寮�鍚疉PI</div>
+						</div>
+						<div class="col-sm-9 ">
+							<div class="col-sm-6 jp-table-distance-top ">
+								<label><input class=" " type="checkbox"
+									name="api_enable" value="true"${OPTION_CHECKED('api_enable')}>
+									<span class="jp-set-info">寮�鍚疉PI</span></label>
+							</div>
+						</div>
+						<div class="clr"></div>
+					</li>
+
+					<li class="jp-set-pad">
+						<div class="col-sm-3 ">
+							<div class="jp-set-info ">鏄惁鍏佽Ajax璺ㄧ珯璇锋眰</div>
+						</div>
+						<div class="col-sm-9 ">
+							<div class="col-sm-6 jp-table-distance-top ">
+								<label><input class=" " type="checkbox"
+									name="api_cors_enable" value="true"${OPTION_CHECKED('api_cors_enable')}>
+									<span class="jp-set-info">鍏佽Ajax璺ㄧ珯璇锋眰<br />锛堝鏋滄槸html5鐨刟pp瀹㈡埛绔紝璇峰嬀閫夋閫夐」锛�
+								</span></label>
+							</div>
+						</div>
+						<div class="clr"></div>
+					</li>
+
+				</ul>
+			</div>
+			<!-- /.box -->
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h4 class="jp-set-pad jp-set-title">搴旂敤鍒楄〃</h4>
+				<div class="box ">
+					<!-- /.box-header -->
+					<div class="box-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>搴旂敤鍚嶇О</th>
+									<th style="width: 10%">app key</th>
+									<th style="width: 10%">app secret</i></th>
+									<th style="width: 10%">鍚敤</i></th>
+									<th style="width: 10%">鎿嶄綔</th>
+								</tr>
+							</thead>
+							<tbody>
+								<#ifcontents ??>
+						<#list contents as content>
+						<tr class="jp-onmouse">
+							<td><strong>${content.title!}</strong></td>
+							<td>${content.text!}</td>
+							<td>${content.flag!}</td>
+							<td>${content.status!}</td>
+							<td>
+							<a href="${CPATH}/admin/api?p=option&c=api&id=${content.id!}">淇敼</a> 
+							<a href="#" onclick="doDelete('${content.id!}')">鍒犻櫎</a> 
+							</td>
+						</tr>
+						</#list> 
+						</#if>
+					</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h4 class="jp-set-title">娣诲姞搴旂敤</h4>
+				<ul class="list-unstyled">
+					<li class="jp-set-pad">
+						<div class="col-sm-3  jp-set-info">搴旂敤鍚嶇О</div>
+						<div class="col-sm-9  jp-set-title-line">
+							<div class="col-sm-6 jp-table-distance-top ">
+								<input class="form-control input-md" type="text"
+									name="content.title" value="${(content.title)!}">
+							</div>
+						</div>
+						<div class="clr"></div>
+					</li>
+					<li class="jp-set-pad">
+						<div class="col-sm-3  jp-set-info">搴旂敤 APP KEY</div>
+						<div class="col-sm-9  jp-set-title-line">
+							<div class="col-sm-6 jp-table-distance-top ">
+								<input class="form-control input-md" type="text"
+									name="content.text" value="${(content.text)!}">
+							</div>
+						</div>
+						<div class="clr"></div>
+					</li>
+					<li class="jp-set-pad">
+						<div class="col-sm-3  jp-set-info">搴旂敤 APP SECRET</div>
+						<div class="col-sm-9  jp-set-title-line">
+							<div class="col-sm-6 jp-table-distance-top ">
+								<input class="form-control input-md" type="text"
+									name="content.flag" value="${(content.flag)!}">
+							</div>
+						</div>
+						<div class="clr"></div>
+					</li>
+					<li class="jp-set-pad">
+						<div class="col-sm-3 ">
+							<div class="  jp-set-info ">鏄惁涓婄嚎</div>
+						</div>
+						<div class="col-sm-9  jp-set-title-line">
+							<div class="col-sm-6 jp-table-distance-top ">
+								<label><input class=" " type="checkbox"
+									name="content.status" value="enable"> <span
+									class="jp-set-info"> 涓婄嚎</span></label>
+							</div>
+						</div>
+						<div class="clr"></div>
+					</li>
+				</ul>
+			</div>
+			<!-- /.box -->
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<button type="button" onclick="doSubmit()" class="btn btn-primary">淇濆瓨</button>
+			</div>
+		</div>
+	</form>
+	<!-- /.row -->
+
+</section>
+<!-- /.content -->
+
+</@layout>

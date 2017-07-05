@@ -1,0 +1,66 @@
+﻿<!--footer-->
+<footer>
+	<div class="main-footer">
+		<div class="container">
+			<div class="row footrow">
+				<div class="col-md-3">
+					<div class="widget catebox">
+						<h4 class="title">分类目录</h4>
+						<div class="box category clearfix">
+							<@jp.menus>
+							<#list menus as menu>
+							<li class="cat-item"><a href="${menu.url!}">${menu.title!}</a>
+							</li>
+							</#list>
+							</@jp.menus>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="widget tagbox">
+						<h4 class="title">文章标签</h4>
+						<div class="box tags clearfix">
+							<ul class="post_tags">
+								<@jp.tags >
+								<#list tags as tag>
+								<li><a href="${tag.url!}">${tag.title!}</a></li>
+								</#list>
+								</@jp.tags >
+							</ul>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-3">
+					<div class="widget contactbox">
+						<h4 class="title">联系我</h4>
+						<div class="contact-us clearfix">
+							<li><a href="javascript:;"> <i class="fa fa-envelope-o"></i>1024220507@qq.com
+							</a></li>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="widget linkbox">
+						<h4 class="title">友情链接</h4>
+						<div class="box friend-links clearfix">
+						<li><a href="http://www.cnblogs.com/kirito520"> ACM-Blog </a></li>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="copyright" style="text-align: center;">
+					<span><a href="#" target="_blank"
+						title="${OPTION('web_icp_number')!}">${OPTION('web_icp_number')!'
+							Copyright ©2017 CYM '}</a></span> <span>${OPTION('simple_statistical_code')!}</span>
+					<!-- <a href="tencent://message/?usin=1024220507&Site=121ask.com&Meu=yes" class="kefu pull-right hidden-xs"><i class="fa fa-qq"></i>在线联系我</a>  -->
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- footer end -->

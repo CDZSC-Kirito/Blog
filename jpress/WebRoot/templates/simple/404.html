@@ -1,0 +1,14 @@
+<#include "_inc/layout.html"/> 
+<@layout>
+	  <div class="error">
+	    <p style="width:100%">
+	      <i class="fa fa-frown-o"></i> 无法找到该页面（404）
+	    </p>
+	    <p>您访问的页面暂时找不到了，可能是链接有误或者已经被删除！</p>
+	    <p>您可以进行以下操作！</p>
+	    <p>
+	      <a href="javascript:history.go(-1);">返回上一页</a>
+	      <a href="${CPATH!}/">返回首页</a>
+	    </p>
+	  </div>
+</@layout>

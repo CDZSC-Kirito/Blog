@@ -1,0 +1,37 @@
+<!-- 底部菜单&侧边栏按钮 -->
+<div class="icon-search" title="搜索内容">
+	<i style="margin-top:18px;" class="fa fa-search"></i>
+</div>
+<div class="menu mobile-menuicon" title="菜单栏">
+	<i class="fa fa-bars"></i>
+</div>
+<a class="to-top" title="回到顶部">
+	<span class="topicon"><i class="fa fa-angle-up"></i></span>
+	<span class="toptext">Top</span>
+</a>
+<div class="menubox">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<ul id="menu-menu" class="icon-list">
+					<li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+						<a href="${CPATH}/">首页
+					      	<#if "/" == REQUEST.requestURI!>
+					      	<span class="x-a-border"></span>
+					      	</#if>
+					     </a>
+				     </li>
+			      	<@jp.menus>
+			        	<#list menus as menu>
+			        		<li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+				        		<a href="${menu.url!}">${menu.title!}</a>
+			        		</li>
+			        	</#list>
+			        </@jp.menus>
+				</ul>			
+			</div>
+		</div>
+	</div>
+	<a href="javascript:;" class="menu-close">&times;</a>
+</div>
+<!-- menu end -->

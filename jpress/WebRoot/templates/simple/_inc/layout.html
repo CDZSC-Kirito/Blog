@@ -1,0 +1,39 @@
+<#macro script_import>
+</#macro>
+<#macro script>
+</#macro>
+<#macro css_import>
+</#macro>
+<#macro css>
+</#macro>
+<#macro layout>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <#include "meta.html"/>
+	<@css_import />
+	<#if css ??>
+	  <style type="text/css">
+	  	<@css />
+	  </style>
+  	</#if>
+</head>
+<body>
+	<#include "searchbox.html"/>
+    <#include "header.html"/>
+    <#nested>
+	<#include "footer.html"/>
+	<#include "menu.html"/>
+
+<@script_import />
+<script src="${CTPATH}/js/jquery.min.js"></script>
+<script src="${CTPATH}/js/jquery.totop.min.js"></script>
+<script src="${CTPATH}/js/menu.js"></script>
+<script src="${CTPATH}/js/top_right_menu.js"></script>
+<script src="${CTPATH}/js/jquery.museum.js"></script>
+<script type="text/javascript">
+	<@script />
+</script>
+</body>
+</html>
+</#macro>
